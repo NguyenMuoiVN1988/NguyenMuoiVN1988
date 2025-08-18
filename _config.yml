@@ -1,0 +1,42 @@
+# _config.yml
+title: "Public Study"
+description: "Tài liệu học tập công khai - Toán học từ Tiểu học đến THPT"
+author: "NguyenMuoiVN1988"
+email: "nguyenmuoi2010@gmail.com"
+
+# Jekyll configuration
+markdown: kramdown
+kramdown:
+  math_engine: mathjax
+  input: GFM
+  hard_wrap: false
+
+# GitHub Pages configuration
+baseurl: ""
+url: "https://nguyenmuoivn1988.github.io"
+
+# Build settings
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Collections
+collections:
+  T12:
+    output: true
+    permalink: /T12/:name/
+  T9:
+    output: true
+    permalink: /T9/:name/
+  Tieuhoc:
+    output: true
+    permalink: /Tieuhoc/:name/
+
+# Exclude files
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - .git
+  - .gitignore

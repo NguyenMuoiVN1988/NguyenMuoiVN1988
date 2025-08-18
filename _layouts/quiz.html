@@ -1,0 +1,120 @@
+---
+layout: default
+---
+<div class="quiz-container">
+    <div class="quiz-header">
+        <h1>{{ page.title }}</h1>
+        <div class="quiz-info">
+            <div class="info-item">
+                <strong>Môn học:</strong> {{ page.subject | default: "Chung" }}
+            </div>
+            <div class="info-item">
+                <strong>Thời gian:</strong> {{ page.duration | default: "30" }} phút
+            </div>
+            <div class="info-item">
+                <strong>Số câu hỏi:</strong> <span id="total-questions">0</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Student Information Form -->
+    <div id="student-info" class="student-form">
+        <h3>📝 Thông tin học sinh</h3>
+        <div class="form-group">
+            <label for="student-name">Họ và tên *</label>
+            <input type="text" id="student-name" placeholder="Nhập họ tên đầy đủ" required>
+        </div>
+        <div class="form-group">
+            <label for="student-id">Mã số học sinh *</label>
+            <input type="text" id="student-id" placeholder="Ví dụ: SV001" required>
+        </div>
+        <div class="form-group">
+            <label for="student-class">Lớp *</label>
+            <input type="text" id="student-class" placeholder="Ví dụ: 12A1" required>
+        </div>
+        <div class="form-group">
+            <label for="student-email">Email (tùy chọn)</label>
+            <input type="email" id="student-email" placeholder="example@email.com">
+        </div>
+        <button id="start-quiz-btn" class="btn btn-primary btn-large">
+            🚀 Bắt đầu làm bài
+        </button>
+    </div>
+    
+    <!-- Quiz Content -->
+    <div id="quiz-content" class="quiz-content" style="display: none;">
+        <div class="quiz-status">
+            <div class="timer-container">
+                <div class="timer-label">⏰ Thời gian còn lại:</div>
+                <div id="timer" class="timer">{{ page.duration | default: "30" }}:00</div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-label">Tiến trình:</div>
+                <div class="progress-bar">
+                    <div id="progress" class="progress"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="answered-count">0</span> / <span id="total-count">0</span> câu
+                </div>
+            </div>
+        </div>
+        
+        <form id="quiz-form">
+            <div class="questions-container">
+                {{ content }}
+            </div>
+        </form>
+        
+        <div class="quiz-controls">
+            <button type="button" id="save-progress-btn" class="btn btn-secondary">
+                💾 Lưu tạm
+            </button>
+            <button type="button" id="submit-quiz-btn" class="btn btn-success btn-large">
+                ✅ Nộp bài
+            </button>
+        </div>
+    </div>
+    
+    <!-- Results -->
+    <div id="result-container" class="result-container" style="display: none;">
+        <div class="result-header">
+            <h2>🎉 Kết quả bài kiểm tra</h2>
+        </div>
+        <div id="quiz-result"></div>
+        <div class="result-actions">
+            <button id="reload-btn" class="btn btn-primary">
+                🔄 Làm lại
+            </button>
+            <a href="{{ '/' | relative_url }}" class="btn btn-secondary">
+                🏠 Về trang chủ
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Quiz data for JavaScript -->
+<script>
+    const quizData = {
+        title: "{{ page.title }}",
+        subject: "{{ page.subject }}",
+        duration: {{ page.duration | default: 30 }},
+        passingScore: {{ page.passing_score | default: 60 }},
+        questions: []
+    };
+</script>
+<!-- === BƯỚC 1: IN CẤU HÌNH FIREBASE VÀO HTML === -->
+<script>
+    const firebaseConfig = {
+        apiKey: "{{ site.firebase.apiKey }}",
+        authDomain: "{{ site.firebase.authDomain }}",
+        projectId: "{{ site.firebase.projectId }}",
+        storageBucket: "{{ site.firebase.storageBucket }}",
+        messagingSenderId: "{{ site.firebase.messagingSenderId }}",
+        appId: "{{ site.firebase.appId }}"
+    };
+</script>
+<!-- === BƯỚC 2: TẢI CÁC THƯ VIỆN FIREBASE === -->
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+<script src="assets/js/quiz.js"></script> 
